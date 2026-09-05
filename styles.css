@@ -39,7 +39,6 @@ button { cursor: pointer; }
   min-height: 72vh;
   min-height: 72dvh;
   position: relative;
-  overflow: hidden;
 }
 .half {
   position: relative;
@@ -47,15 +46,18 @@ button { cursor: pointer; }
   display: flex; flex-direction: column; justify-content: space-between;
   min-height: 0;
   transition: background-color var(--ease), color var(--ease);
-  overflow: hidden;
   isolation: isolate;
   container-type: inline-size;
 }
+.half:focus-within { z-index: 10; }
+.sky { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
 .half.night { background: var(--night); color: var(--night-ink); }
 .half.dawn  { background: var(--dawn);  color: var(--dawn-ink); }
 .half.day   { background: var(--day);   color: var(--day-ink); }
 .half.dusk  { background: var(--dusk);  color: var(--dusk-ink); }
 .half > * { position: relative; z-index: 2; }
+.half > .sky { position: absolute; z-index: 0; }
+.half > .top { z-index: 5; }
 
 /* sun and moon */
 .orb {
@@ -113,6 +115,7 @@ button { cursor: pointer; }
 .city:focus { border-bottom-width: 3px; }
 .menu {
   position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 30;
+  box-shadow: 0 8px 24px rgba(20,33,61,.18);
   background: var(--paper); color: var(--ink);
   border: 1.5px solid var(--line); border-radius: 8px;
   list-style: none; padding: .25rem 0; margin: 0; max-height: 40vh; overflow: auto;

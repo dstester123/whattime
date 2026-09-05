@@ -270,8 +270,8 @@ const countryOf = cc => { if (cc === "UN") return ""; try { return regionNames?.
 const fold = s => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9 ]+/g, " ").replace(/\s+/g, " ").trim();
 const slugOf = s => fold(s).replace(/ /g, "-");
 
-const CITIES = RAW.map(([name, cc, tz, lat, lon, al]) => ({
-  name, cc, tz, lat, lon, flag: flagOf(cc), country: countryOf(cc),
+const CITIES = RAW.map(([name, cc, tz, lat, lon, al], rank) => ({
+  name, cc, tz, lat, lon, rank, flag: flagOf(cc), country: countryOf(cc),
   slug: slugOf(name),
   aliases: al ? al.split("|").map(fold) : [],
 }));
@@ -325,12 +325,20 @@ function search(q) {
     if (c.isZone) s -= 5;
     return s;
   };
-  const scored = [];
+  let scored = [];
   for (const c of CITY_LIST) { const s = score(c); if (s) scored.push([s, c]); }
-  if (scored.length < 5) for (const c of ZONE_ENTRIES) { const s = score(c); if (s) scored.push([s, c]); }
-  scored.sort((a, b) => b[0] - a[0] || a[1].name.localeCompare(b[1].name));
-  const out = [], seenTz = new Set();
-  for (const [, c] of scored) { const k = c.slug; if (seenTz.has(k)) continue; seenTz.add(k); out.push(c); if (out.length >= 7) break; }
+  // if anything matched by name or alias prefix, drop the substring-only matches ("lon" should not offer Barcelona)
+  const strong = scored.some(([s]) => s >= 25 * toks.length);
+  if (strong) scored = scored.filter(([s]) => s >= 15 * toks.length);
+  scored.sort((a, b) => b[0] - a[0] || (a[1].rank ?? 1e9) - (b[1].rank ?? 1e9));
+  const out = [], seenSlug = new Set(), seenTz = new Set();
+  for (const [, c] of scored) { if (seenSlug.has(c.slug)) continue; seenSlug.add(c.slug); seenTz.add(c.tz); out.push(c); if (out.length >= 6) break; }
+  if (out.length < 3) {
+    const extra = [];
+    for (const c of ZONE_ENTRIES) { if (seenTz.has(c.tz)) continue; const s = score(c); if (s >= 15 * toks.length || (!strong && s)) extra.push([s, c]); }
+    extra.sort((a, b) => b[0] - a[0] || a[1].name.localeCompare(b[1].name));
+    for (const [, c] of extra) { if (seenTz.has(c.tz)) continue; seenTz.add(c.tz); out.push(c); if (out.length >= 6) break; }
+  }
   return out;
 }
 
@@ -453,9 +461,8 @@ function makeHalf(i) {
   const sec = document.createElement("section");
   sec.className = "half";
   sec.innerHTML = `
-    <div class="stars" aria-hidden="true"></div>
-    <div class="orb hidden" aria-hidden="true"></div>
-    <div>
+    <div class="sky" aria-hidden="true"><div class="stars"></div><div class="orb hidden"></div></div>
+    <div class="top">
       <div class="who"><span>${WHO[i]}</span>${i >= 2 ? '<button type="button" class="remove" aria-label="Remove this person">remove</button>' : ""}</div>
       <div class="search">
         <input class="city" type="text" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Type a city" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-label="${i === 0 ? "Your city" : "Their city"}">
