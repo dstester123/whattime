@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What time is it for them?</title>
+<meta name="description" content="Two cities, two clocks, one honest sentence about whether you should call them right now.">
+<meta name="theme-color" content="#0b1230">
+<meta property="og:title" content="What time is it for them?">
+<meta property="og:description" content="Two cities, two clocks, one honest sentence about whether you should call.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="icon" id="favicon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2314213d'/%3E%3Cpath d='M16 8v8h6' stroke='%23f7f4ee' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#controls">Skip to controls</a>
+
+<main class="halves" id="halves" data-count="2">
+  <!-- halves are rendered by app.js -->
+</main>
+
+<section class="below" id="controls" aria-label="Controls">
+  <p class="summary" id="summary">Pick two cities.</p>
+
+  <div class="later" id="later">
+    <label for="scrub"><span id="scrubLabel">What about later?</span></label>
+    <div class="scrubrow">
+      <input type="range" id="scrub" min="-1440" max="2880" step="15" value="0" aria-describedby="scrubHint">
+      <button type="button" class="ghost" id="nowBtn" hidden>Back to now</button>
+    </div>
+    <p class="hint" id="scrubHint">Drag the line between the clocks, swipe the strip, or use the arrow keys.</p>
+  </div>
+
+  <div class="strip" id="strip" hidden>
+    <div class="bar" id="bar" role="img" aria-label="24-hour overlap of waking hours, on your clock"></div>
+    <div class="ticks" aria-hidden="true"><span>Midnight</span><span>6am</span><span>Noon</span><span>6pm</span><span>Midnight</span></div>
+    <p class="legend" id="legend"></p>
+  </div>
+
+  <div class="actions" id="actions" hidden>
+    <button type="button" class="primary" id="findBtn">Find a good time</button>
+    <button type="button" class="ghost" id="addBtn">+ someone else</button>
+  </div>
+
+  <div class="pick" id="pick" hidden>
+    <p class="picktext" id="pickText"></p>
+    <div class="pickrow">
+      <button type="button" class="ghost" id="copyPick">Copy</button>
+      <button type="button" class="ghost" id="icsBtn">Add to calendar</button>
+    </div>
+  </div>
+
+  <div class="share" id="share" hidden>
+    <button type="button" class="ghost" id="copyLink">Copy link</button>
+    <button type="button" class="ghost" id="copySentence">Copy the sentence</button>
+    <button type="button" class="ghost" id="shareImg">Share picture</button>
+  </div>
+
+  <p class="foot" id="foot"></p>
+</section>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<canvas id="og" width="1200" height="630" hidden></canvas>
+
+<script src="app.js" defer></script>
+</body>
+</html>
