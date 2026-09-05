@@ -209,14 +209,21 @@ button.ghost:hover, button.primary:hover { transform: translateY(-1px); }
 
 /* ---------- mobile ---------- */
 @media (max-width: 760px) {
-  .halves { grid-template-columns: 1fr; min-height: 0; }
-  .half { min-height: 44vh; padding: 1.4rem 6vw; }
-  .halves[data-count="3"] .half { min-height: 33vh; }
-  .halves[data-count="4"] .half { min-height: 28vh; }
-  .time { font-size: clamp(3.4rem, 19vw, 6rem); font-size: clamp(3.4rem, 19cqw, 6rem); margin-top: 1.2rem; }
+  /* both clocks fit one phone screen; the controls sit below the fold */
+  .halves { grid-template-columns: 1fr; grid-template-rows: repeat(var(--n, 2), minmax(0, 1fr)); height: 100vh; height: 100svh; min-height: 0; }
+  .half { min-height: 0; padding: max(.9rem, env(safe-area-inset-top)) 6vw .9rem; }
+  .who { font-size: .8rem; margin-bottom: .1rem; }
+  .city { font-size: 1.15rem; padding: .1rem 0; }
+  .time { font-size: clamp(2.2rem, 15cqw, 4.6rem); margin-top: .2rem; }
+  .date { font-size: .9rem; margin-top: .2rem; }
+  .mood { font-size: .95rem; margin-top: .3rem; min-height: 0; }
+  .mood .emoji { font-size: 1.25rem; }
+  .sunline { font-size: .72rem; margin-top: .25rem; }
+  .halves[data-count="3"] .time, .halves[data-count="4"] .time { font-size: clamp(1.8rem, 11cqw, 3rem); }
+  .halves[data-count="4"] .sunline, .halves[data-count="4"] .date { display: none; }
   .divider { display: none; }
-  .orb { width: 48px; height: 48px; }
-  .below { padding: 1.8rem 6vw 4rem; }
+  .orb { width: 44px; height: 44px; }
+  .below { padding: 1.6rem 6vw 4rem; }
   .menu { max-height: 36vh; }
 }
 
