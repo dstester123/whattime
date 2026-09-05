@@ -408,7 +408,7 @@ function orbPos(p, ms) {
     if (s && s.polar === "day") return { kind: "sun", x: 0.5 + 0.4 * Math.sin(l.hf / 24 * 2 * Math.PI), y: 0.35 };
     if (s && s.polar === "night") return { kind: "moon", x: 0.5 + 0.4 * Math.sin(l.hf / 24 * 2 * Math.PI), y: 0.35 };
   } else { rise = s.rise; set = s.set; }
-  const arc = t => ({ x: 0.08 + 0.84 * t, y: 0.88 - Math.sin(Math.max(0, Math.min(1, t)) * Math.PI) * 0.62 });
+  const arc = t => ({ x: 0.3 + 0.65 * t, y: 0.6 - Math.sin(Math.max(0, Math.min(1, t)) * Math.PI) * 0.46 });
   if (ms >= rise - TW && ms <= set + TW) { return { kind: "sun", ...arc((ms - rise) / (set - rise)) }; }
   // night: from set to next rise
   const dayLen = set - rise, nightLen = 86400000 - dayLen;
@@ -683,7 +683,7 @@ function renderStrip(t, me, friends) {
     if (ok) { if (!cur) cur = [h, h]; cur[1] = h + 0.25; }
     else if (cur) { if (!best || cur[1] - cur[0] > best[1] - best[0]) best = cur; cur = null; }
   }
-  const names = all.map((p, i) => `<span class="key b${i} band" style="position:static"></span>${i === 0 ? "You" : esc(p.place.name)}`).join(" ");
+  const names = all.map((p, i) => `<span class="key b${i}"></span>${i === 0 ? "You" : esc(p.place.name)}`).join(" ");
   $("legend").innerHTML = `${names} · waking hours, on your clock. ` + (best ? `Best window to call: <b>${clockRound(best[0])} to ${clockRound(best[1])}</b> your time.` : `<b>No shared waking hours.</b> Someone is staying up late.`);
 }
 

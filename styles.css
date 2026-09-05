@@ -47,6 +47,7 @@ button { cursor: pointer; }
   transition: background-color var(--ease), color var(--ease);
   overflow: hidden;
   isolation: isolate;
+  container-type: inline-size;
 }
 .half.night { background: var(--night); color: var(--night-ink); }
 .half.dawn  { background: var(--dawn);  color: var(--dawn-ink); }
@@ -66,7 +67,7 @@ button { cursor: pointer; }
 }
 .orb.sun { background: #ffd166; box-shadow: 0 0 0 14px rgba(255,209,102,.18), 0 0 60px 20px rgba(255,209,102,.25); }
 .orb.moon {
-  background: #e9e6da;
+  background: #d8d3c4; opacity: .9;
   box-shadow: 0 0 0 10px rgba(233,230,218,.06), 0 0 40px 10px rgba(233,230,218,.12);
   overflow: hidden;
 }
@@ -124,6 +125,7 @@ button { cursor: pointer; }
 
 .time {
   font-size: clamp(3.4rem, calc(22vw / var(--n, 2) + 1rem), 9.5rem);
+  font-size: clamp(2.4rem, 21cqw, 9.5rem);
   font-weight: 800; line-height: 1; letter-spacing: -.035em; margin-top: 3vh;
   white-space: nowrap;
 }
@@ -168,10 +170,10 @@ input[type="range"] { flex: 1; accent-color: var(--ink); height: 28px; }
 .strip { margin-top: 2rem; touch-action: pan-y; }
 .bar { position: relative; touch-action: none; height: 52px; border: 1.5px solid var(--line); border-radius: 6px; overflow: hidden; cursor: ew-resize; }
 .band { position: absolute; top: 0; bottom: 0; }
-.band.b0 { background: rgba(20,33,61,.16); }
-.band.b1 { background: rgba(180,83,60,.32); }
-.band.b2 { background: rgba(46,125,110,.32); }
-.band.b3 { background: rgba(120,60,160,.28); }
+.b0 { background: rgba(20,33,61,.16); }
+.b1 { background: rgba(180,83,60,.32); }
+.b2 { background: rgba(46,125,110,.32); }
+.b3 { background: rgba(120,60,160,.28); }
 .nowline { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
 .nowline::after { content: attr(data-t); position: absolute; top: 6px; left: 6px; font-size: .7rem; font-weight: 800; white-space: nowrap; }
 .nowline.flip::after { left: auto; right: 6px; }
@@ -209,7 +211,7 @@ button.ghost:hover, button.primary:hover { transform: translateY(-1px); }
   .half { min-height: 44vh; padding: 1.4rem 6vw; }
   .halves[data-count="3"] .half { min-height: 33vh; }
   .halves[data-count="4"] .half { min-height: 28vh; }
-  .time { font-size: clamp(3.4rem, 19vw, 6rem); margin-top: 1.2rem; }
+  .time { font-size: clamp(3.4rem, 19vw, 6rem); font-size: clamp(3.4rem, 19cqw, 6rem); margin-top: 1.2rem; }
   .divider { display: none; }
   .orb { width: 48px; height: 48px; }
   .below { padding: 1.8rem 6vw 4rem; }
