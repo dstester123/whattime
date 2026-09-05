@@ -1,3 +1,5 @@
+@font-face { font-family: "Manrope"; font-style: normal; font-weight: 500 800; font-display: swap; src: url("manrope.woff2") format("woff2"); }
+
 :root {
   --ink: #14213d;
   --paper: #f7f4ee;
@@ -137,7 +139,7 @@ button { cursor: pointer; }
 .mood .emoji { font-size: 1.6rem; display: inline-block; line-height: 1; }
 .mood .emoji.pop { animation: pop .5s cubic-bezier(.2,1.6,.4,1); }
 @keyframes pop { 0% { transform: scale(.2) rotate(-20deg); } 100% { transform: none; } }
-.sunline { font-size: .85rem; opacity: .7; margin-top: .5rem; font-weight: 500; }
+.sunline { font-size: .85rem; opacity: .86; margin-top: .5rem; font-weight: 500; }
 
 /* draggable divider (only between first two halves) */
 .divider {
@@ -159,13 +161,13 @@ button { cursor: pointer; }
 .below { padding: 4vh 5vw 6vh; max-width: 62rem; }
 .summary { font-size: clamp(1.25rem, 2.6vw, 1.9rem); font-weight: 500; line-height: 1.35; max-width: 36ch; min-height: 2.6em; }
 .summary strong { font-weight: 800; }
-.summary .dim { opacity: .6; }
+.summary .dim { opacity: .74; }
 
 .later { margin-top: 2.5rem; }
 .later label { font-weight: 800; font-size: 1rem; display: block; margin-bottom: .5rem; }
 .scrubrow { display: flex; align-items: center; gap: 1rem; }
 input[type="range"] { flex: 1; accent-color: var(--ink); height: 28px; }
-.hint { font-size: .85rem; opacity: .6; margin-top: .4rem; }
+.hint { font-size: .85rem; opacity: .74; margin-top: .4rem; }
 
 .strip { margin-top: 2rem; touch-action: pan-y; }
 .bar { position: relative; touch-action: none; height: 52px; border: 1.5px solid var(--line); border-radius: 6px; overflow: hidden; cursor: ew-resize; }
@@ -177,7 +179,7 @@ input[type="range"] { flex: 1; accent-color: var(--ink); height: 28px; }
 .nowline { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); }
 .nowline::after { content: attr(data-t); position: absolute; top: 6px; left: 6px; font-size: .7rem; font-weight: 800; white-space: nowrap; }
 .nowline.flip::after { left: auto; right: 6px; }
-.ticks { display: flex; justify-content: space-between; font-size: .78rem; opacity: .6; margin-top: .4rem; }
+.ticks { display: flex; justify-content: space-between; font-size: .78rem; opacity: .74; margin-top: .4rem; }
 .legend { margin-top: .9rem; font-size: .95rem; line-height: 1.5; }
 .legend b { font-weight: 800; }
 .key { display: inline-block; width: .85em; height: .85em; border-radius: 3px; vertical-align: -.08em; margin-right: .3em; }
@@ -194,7 +196,7 @@ button.ghost:hover, button.primary:hover { transform: translateY(-1px); }
 .pick { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1.5px solid var(--line); }
 .picktext { font-size: clamp(1.1rem, 2.2vw, 1.5rem); font-weight: 500; line-height: 1.4; }
 .picktext b { font-weight: 800; }
-.foot { margin-top: 3rem; font-size: .8rem; opacity: .55; line-height: 1.5; max-width: 60ch; }
+.foot { margin-top: 3rem; font-size: .8rem; opacity: .74; line-height: 1.5; max-width: 60ch; }
 .foot a { color: inherit; }
 
 .toast {
