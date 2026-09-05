@@ -511,8 +511,10 @@ function layout() {
 function wireSearch(p) {
   const { input, menu } = p.refs;
   let items = [], sel = -1;
-  const close = () => { menu.hidden = true; input.setAttribute("aria-expanded", "false"); sel = -1; };
+  let closeT;
+  const close = () => { clearTimeout(closeT); menu.hidden = true; input.setAttribute("aria-expanded", "false"); sel = -1; };
   const choose = c => { p.place = c; input.value = c.name; close(); sync(); };
+  let picking = false; // a tap on an option is in progress; do not let the blur revert the value
   const open = () => {
     items = search(input.value);
     if (!items.length) return close();
@@ -522,11 +524,15 @@ function wireSearch(p) {
       return `<li role="option" id="opt-${p.idx}-${k}" aria-selected="${k === sel}"><span class="flag">${c.flag}</span><span class="name">${esc(c.name)}${c.country ? ` <small>${esc(c.country)}</small>` : ""}</span><span class="t">${h12(l.h, l.mi)}</span></li>`;
     }).join("");
     menu.hidden = false; input.setAttribute("aria-expanded", "true");
-    [...menu.children].forEach((li, k) => li.addEventListener("mousedown", e => { e.preventDefault(); choose(items[k]); }));
+    [...menu.children].forEach((li, k) => {
+      const pick = e => { e.preventDefault(); picking = true; choose(items[k]); picking = false; input.blur(); };
+      li.addEventListener("pointerdown", pick);     // fires before the input blurs, on touch and mouse alike
+      li.addEventListener("click", e => { if (!menu.hidden) pick(e); });
+    });
   };
   input.addEventListener("input", () => { sel = -1; open(); });
   input.addEventListener("focus", () => { input.select(); });
-  input.addEventListener("blur", () => { close(); if (p.place) input.value = p.place.name; });
+  input.addEventListener("blur", () => { if (picking) return; closeT = setTimeout(() => { close(); if (p.place) input.value = p.place.name; }, 150); });
   input.addEventListener("keydown", e => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       if (menu.hidden) open(); if (!items.length) return;
